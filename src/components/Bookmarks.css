@@ -1,0 +1,25 @@
+.bookmarks-page {
+  padding: 2rem;
+}
+
+.bookmark-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.bookmark-card {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: white;
+  border-left: 4px solid #00bcd4;
+}
+
+.bookmark-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+}

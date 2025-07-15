@@ -1,58 +1,145 @@
 .solve-page-container {
+  max-width: 1000px;
+  margin: 0 auto;
   padding: 2rem;
-  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
 }
 
 .solve-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
 .back-button {
+  background-color: #007bff;
+  color: white;
+  padding: 0.45rem 1rem;
+  border-radius: 5px;
   text-decoration: none;
-  color: #007bff;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
 }
 
 .back-button:hover {
-  text-decoration: underline;
+  background-color: #0056b3;
+}
+
+.solve-header h2 {
+  font-size: 1.6rem;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .question-details {
-  border: 1px solid #ccc;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 1rem;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 6px solid #007bff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.question-details p {
+  font-size: 1rem;
+  color: #4a4a4a;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .code-editor-placeholder {
-  height: 300px;
-  border: 2px dashed #999;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.code-editor-placeholder i {
+  color: #bbb;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.code-editor-placeholder textarea {
+  width: 100%;
+  height: 260px;
+  padding: 1rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 15px;
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  border: 1px solid #333;
   border-radius: 6px;
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #666;
-  font-size: 1.2rem;
+  resize: vertical;
+  outline: none;
 }
 
 .submit-button {
   background-color: #28a745;
   color: white;
-  border: none;
-  padding: 0.7rem 1.5rem;
+  padding: 0.65rem 1.4rem;
   font-size: 1rem;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  transition: background-color 0.2s ease;
 }
 
 .submit-button:hover {
   background-color: #218838;
 }
+
+/* Responsive Improvements */
+@media (max-width: 768px) {
+  .solve-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .solve-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .code-editor-placeholder textarea {
+    height: 220px;
+  }
+}
+
+.code-editor-placeholder {
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ccc;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.bookmark-button {
+  padding: 10px 20px;
+  background-color: #ff9800;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.bookmark-button:hover {
+  background-color: #f57c00;
+}
+

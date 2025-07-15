@@ -1,0 +1,32 @@
+.notfound-container {
+  text-align: center;
+  margin-top: 10vh;
+  padding: 2rem;
+  color: #333;
+font-family: 'Nunito', sans-serif;
+}
+
+.notfound-container h1 {
+  font-size: 6rem;
+  color: #ff4d4f;
+  margin-bottom: 0.5rem;
+}
+
+.notfound-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.notfound-container p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.back-home {
+  background-color: #007bff;
+  padding: 0.6rem 1.2rem;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
