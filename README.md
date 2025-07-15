@@ -1,38 +1,60 @@
 # 🧠 Logic Lab
 
-A mini HackerRank-style frontend built using **React + Vite**, featuring a question list, solve page, and login/signup flow.
+A modern HackerRank-style coding platform clone built using **React + Vite**.  
+Logic Lab includes login/signup flows, dashboard, question lists, bookmarking, and code solving pages – all styled with clean, custom CSS.
 
 ---
 
 ## 🚀 Features
 
-- 🔐 Login & Signup forms
-- 🔄 Navigation using `react-router-dom`
-- 📄 Question List UI
-- 🧑‍💻 Solve Page with dynamic routing (`/solve/:id`)
-- 🎨 External CSS styling (trainer-friendly)
-- 🌐 Font Awesome icons via CDN
+- 🔐 **Login & Signup** using React Router
+- 🧑‍💻 **Dashboard** for user stats and subjects
+- 📄 **Question List** page
+- ✏️ **Solve Page** for individual problems
+- 📌 **Bookmarks Page** to view saved questions
+- 🏆 **Leaderboard Page** (UI Ready)
+- 🌗 **Dark/Light Mode** toggle
+- 💬 Toast notifications for user feedback
+- 🎨 Fully responsive custom CSS styling
 
 ---
 
-## 📁 Project Structure
+## 🗂️ Project Structure
 
-logic_lab/
+```
+
+logic\_lab/
+├── backend/                  # Node.js + MySQL backend (auth system)
 ├── src/
-│ ├── components/
-│ │ ├── Login.jsx
-│ │ ├── Signup.jsx
-│ │ ├── QuestionList.jsx
-│ │ ├── SolvePage.jsx
-│ │ ├── Auth.css
-│ │ ├── QuestionList.css
-│ │ └── SolvePage.css
-│ ├── App.jsx
-│ ├── main.jsx
-│ └── index.css
+│   ├── components/
+│   │   ├── Login.jsx
+│   │   ├── Signup.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── QuestionList.jsx
+│   │   ├── SolvePage.jsx
+│   │   ├── Bookmarks.jsx
+│   │   ├── Leaderboard.jsx
+│   │   ├── styles/
+│   │   │   ├── Auth.css
+│   │   │   ├── Dashboard.css
+│   │   │   ├── QuestionList.css
+│   │   │   └── SolvePage.css
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
 ├── public/
-│ └── index.html
+│   └── index.html
 └── README.md
+
+````
+
+---
+
+## 📸 Screenshots
+
+| Landing Page | Dashboard | Question Page | Solve Page |
+|--------------|-----------|----------------|-------------|
+| ![Landing](screenshots/landing.png) | ![Dashboard](screenshots/dashboard.png) | ![Question](screenshots/question.png) | ![Solve](screenshots/solve.png) |
 
 
 ---
@@ -41,29 +63,35 @@ logic_lab/
 
 - [React](https://reactjs.org/)
 - [Vite](https://vitejs.dev/)
-- [React Router DOM](https://reactrouter.com/)
-- [Font Awesome (CDN)](https://cdnjs.com/libraries/font-awesome)
-- Plain CSS (External file-based)
+- [React Router](https://reactrouter.com/)
+- [Font Awesome](https://cdnjs.com/libraries/font-awesome)
+- [Node.js](https://nodejs.org/) & [MySQL](https://www.mysql.com/) *(backend for auth)*
+- Toast Notifications via `react-hot-toast`
+- Fully responsive **plain CSS** (no Bootstrap)
 
 ---
 
 ## 🔧 Setup Instructions
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/logic_lab.git
-cd logic_lab
+# 1. Clone the repo
+git clone https://github.com/bhaktikarche/logic-lab.git
+cd logic-lab
 
-# 2. Install dependencies
+# 2. Install frontend dependencies
 npm install
 
-# 3. Start the development server
+# 3. Start the React development server
 npm run dev
+````
+
+> 🗒️ For backend setup, refer to `/backend/README.md` (coming soon)
 
 ---
 
-## 👥 Project Contributors
+## 📌 License
 
-This project is developed as part of a frontend learning module.  
-All components and features are built for practice and demonstration purposes.
+This project is built for learning and educational purposes.
+
+---
 
