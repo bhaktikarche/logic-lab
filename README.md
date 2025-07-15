@@ -1,12 +1,69 @@
-# React + Vite
+# 🧠 Logic Lab
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A mini HackerRank-style frontend built using **React + Vite**, featuring a question list, solve page, and login/signup flow.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- 🔐 Login & Signup forms
+- 🔄 Navigation using `react-router-dom`
+- 📄 Question List UI
+- 🧑‍💻 Solve Page with dynamic routing (`/solve/:id`)
+- 🎨 External CSS styling (trainer-friendly)
+- 🌐 Font Awesome icons via CDN
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📁 Project Structure
+
+logic_lab/
+├── src/
+│ ├── components/
+│ │ ├── Login.jsx
+│ │ ├── Signup.jsx
+│ │ ├── QuestionList.jsx
+│ │ ├── SolvePage.jsx
+│ │ ├── Auth.css
+│ │ ├── QuestionList.css
+│ │ └── SolvePage.css
+│ ├── App.jsx
+│ ├── main.jsx
+│ └── index.css
+├── public/
+│ └── index.html
+└── README.md
+
+
+---
+
+## ⚙️ Tech Stack
+
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [React Router DOM](https://reactrouter.com/)
+- [Font Awesome (CDN)](https://cdnjs.com/libraries/font-awesome)
+- Plain CSS (External file-based)
+
+---
+
+## 🔧 Setup Instructions
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/logic_lab.git
+cd logic_lab
+
+# 2. Install dependencies
+npm install
+
+# 3. Start the development server
+npm run dev
+
+---
+
+## 👥 Project Contributors
+
+This project is developed as part of a frontend learning module.  
+All components and features are built for practice and demonstration purposes.
+
