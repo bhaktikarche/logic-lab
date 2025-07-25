@@ -60,7 +60,7 @@ function App() {
           }
         />
         <Route
-          path="/questions/:subject"
+          path="/questions/:subjectId"
           element={
             <ProtectedRoute>
               <QuestionList />
@@ -68,10 +68,10 @@ function App() {
           }
         />
         <Route
-          path="/solve/:subject/:id"
+          path="/solve/:subjectId/:questionId"
           element={
             <ProtectedRoute>
-              <SolvePage />
+              <SolvePage/>
             </ProtectedRoute>
           }
         />

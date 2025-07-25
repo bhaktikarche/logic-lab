@@ -1,34 +1,71 @@
-const db = require("../models/db");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import db from "../models/db.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-exports.register = (req, res) => {
-  const { username, email, password } = req.body;
+export const register = async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
 
-  const sql = "SELECT * FROM users WHERE email = ?";
-  db.query(sql, [email], async (err, result) => {
-    if (result.length) return res.status(409).json({ msg: "User already exists" });
+    // Check if user exists
+    const [existingUsers] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+    if (existingUsers.length) {
+      return res.status(409).json({ msg: "User already exists" });
+    }
 
-    const hashed = await bcrypt.hash(password, 10);
-    const insertSql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    db.query(insertSql, [username, email, hashed], (err, data) => {
-      if (err) return res.status(500).json(err);
-      res.status(201).json({ msg: "User registered" });
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create user
+    const [result] = await db.query(
+      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+      [username, email, hashedPassword]
+    );
+
+    res.status(201).json({ 
+      msg: "User registered successfully",
+      userId: result.insertId 
     });
-  });
+  } catch (err) {
+    console.error("Registration error:", err);
+    res.status(500).json({ msg: "Internal server error" });
+  }
 };
 
-exports.login = (req, res) => {
-  const { email, password } = req.body;
-  const sql = "SELECT * FROM users WHERE email = ?";
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-  db.query(sql, [email], async (err, data) => {
-    if (err || !data.length) return res.status(401).json({ msg: "Invalid credentials" });
+    // Find user
+    const [users] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+    if (!users.length) {
+      return res.status(401).json({ msg: "Invalid credentials" });
+    }
 
-    const isMatch = await bcrypt.compare(password, data[0].password);
-    if (!isMatch) return res.status(401).json({ msg: "Incorrect password" });
+    const user = users[0];
 
-    const token = jwt.sign({ id: data[0].id, email: data[0].email }, process.env.JWT_SECRET, { expiresIn: "1h" });
-    res.json({ token, user: { id: data[0].id, username: data[0].username, email: data[0].email } });
-  });
+    // Verify password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ msg: "Invalid credentials" });
+    }
+
+    // Generate JWT
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({
+      token,
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ msg: "Internal server error" });
+  }
 };

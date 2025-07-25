@@ -1,34 +1,58 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import axios from "axios";
 import "./Dashboard.css";
 
-const subjects = [
-  { id: "javascript", name: "JavaScript", icon: "fab fa-js" },
-  { id: "cpp", name: "C++", icon: "fas fa-code" },
-  { id: "dbms", name: "DBMS", icon: "fas fa-database" },
-  { id: "os", name: "Operating Systems", icon: "fas fa-desktop" },
-];
-
 export default function Dashboard() {
-  const user = localStorage.getItem("user");
+  const userData = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true" || false
   );
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [subjects, setSubjects] = useState([]);
+  const [stats, setStats] = useState({
+    questionsSolved: 0,
+    totalSubmissions: 0,
+    lastActive: "Today"
+  });
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    if (!user) {
+    if (!userData) {
       navigate("/login");
     }
-  }, [user, navigate]);
+  }, [userData, navigate]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const subjectsRes = await axios.get("http://localhost:5000/api/subjects");
+        setSubjects(subjectsRes.data);
+        
+        const statsRes = await axios.get(`http://localhost:5000/api/users/${userData.id}/stats`);
+        setStats({
+          questionsSolved: statsRes.data.questionsSolved || 0,
+          totalSubmissions: statsRes.data.totalSubmissions || 0,
+          lastActive: statsRes.data.lastActive || "Today"
+        });
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const toggleDarkMode = () => {
     const newMode = !darkMode;
     setDarkMode(newMode);
     localStorage.setItem("darkMode", newMode.toString());
+  };
+
+  const handleSubjectClick = (subjectId) => {
+    navigate(`/questions/${subjectId}`);
   };
 
   const handleLogout = () => {
@@ -62,17 +86,19 @@ export default function Dashboard() {
       <main className="dashboard-container">
         {/* Header */}
         <div className="dashboard-header">
-          <h2>Dashboard</h2>
+          <div className="logo-container">
+            {/* <img src={logo} alt="Logic Lab Logo" className="logo" /> */}
+            <h1>Logic Lab</h1>
+          </div>
           <div className="profile-container" ref={dropdownRef}>
             <div className="profile-icon" onClick={toggleProfileDropdown}>
               <i className="fas fa-user-circle"></i>
               {showProfileDropdown && (
-                <div className="profile-dropdown">
-                  <div className="dropdown-header">
+<div className={`profile-dropdown ${showProfileDropdown ? 'active' : ''}`}>                  <div className="dropdown-header">
                     <i className="fas fa-user-circle"></i>
                     <div>
-                      <div className="dropdown-username">{user}</div>
-                      {/* <div className="dropdown-email">user@example.com</div> */}
+                      <div className="dropdown-username">{userData?.name || "User"}</div>
+                      <div className="dropdown-email">{userData?.email || "user@example.com"}</div>
                     </div>
                   </div>
 
@@ -135,44 +161,48 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Welcome Card */}
         <div className="user-card">
           <i className="fas fa-user-circle user-icon"></i>
-          <div>
-            <h2>{user}</h2>
+          <div className="user-info">
+            <h2>{userData?.name || "Welcome"}</h2>
             <p>Welcome back to Logic Lab!</p>
           </div>
         </div>
 
-        {/* Stats */}
         <div className="dashboard-stats">
           <div className="stat-box">
-            <h3>4</h3>
+            <h3>{stats.questionsSolved}</h3>
             <p>Questions Solved</p>
           </div>
           <div className="stat-box">
-            <h3>7</h3>
+            <h3>{stats.totalSubmissions}</h3>
             <p>Total Submissions</p>
           </div>
           <div className="stat-box">
-            <h3>Today</h3>
+            <h3>{stats.lastActive}</h3>
             <p>Last Active</p>
           </div>
         </div>
 
         {/* Subjects */}
-        <h3 className="section-title">Subjects</h3>
-        <div className="subjects-grid">
-          {subjects.map((subj) => (
-            <div
-              key={subj.id}
-              className="subject-card"
-              onClick={() => navigate(`/questions/${subj.id}`)}
-            >
-              <i className={`${subj.icon} subject-icon ${subj.id}-icon`}></i>
-              <span className="subject-name">{subj.name}</span>
-            </div>
-          ))}
+        <div className="subjects-section">
+          <h2 className="subjects-title">Subjects</h2>
+          {subjects.length === 0 ? (
+            <p className="no-subjects">No subjects found.</p>
+          ) : (
+            <ul className="subjects-list">
+              {subjects.map((subject) => (
+                <li
+                  key={subject.subject_id}
+                  onClick={() => handleSubjectClick(subject.subject_id)}
+                  className="subject-item"
+                >
+                  <i className={`fas ${subject.icon || "fa-book"}`}></i>
+                  <span>{subject.name}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </main>
     </div>

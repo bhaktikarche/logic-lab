@@ -1,91 +1,75 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "./QuestionList.css";
 
-const allQuestions = [
-  { id: 1, title: "Two Sum", difficulty: "Easy", subject: "javascript" },
-  {
-    id: 2,
-    title: "Reverse a String",
-    difficulty: "Easy",
-    subject: "javascript",
-  },
-  {
-    id: 3,
-    title: "Longest Substring Without Repeating Characters",
-    difficulty: "Medium",
-    subject: "javascript",
-  },
-  { id: 4, title: "Merge K Sorted Lists", difficulty: "Hard", subject: "cpp" },
-  { id: 5, title: "BCNF Decomposition", difficulty: "Medium", subject: "dbms" },
-];
+function QuestionList() {
+  const { subjectId } = useParams(); 
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-export default function QuestionList() {
-  const { subject } = useParams();
-  const navigate = useNavigate();
-  const user = localStorage.getItem("user");
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`http://localhost:5000/api/questions/${subjectId}`)
+      .then((res) => {
+        setQuestions(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to load questions");
+        setLoading(false);
+      });
+  }, [subjectId]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/");
+  const getDifficultyClass = (difficulty) => {
+    switch (difficulty.toLowerCase()) {
+      case 'easy':
+        return 'difficulty-easy';
+      case 'medium':
+        return 'difficulty-medium';
+      case 'hard':
+        return 'difficulty-hard';
+      default:
+        return '';
+    }
   };
-
-  const questions = allQuestions.filter((q) => q.subject === subject);
 
   return (
     <div className="question-list-container">
-      <div className="question-list-header">
-        <h2>
-          <i className="fas fa-book"></i> {subject.toUpperCase()} Questions
-        </h2>
-
-        <div className="profile-section">
-          <span>
-            <i className="fas fa-user"></i> {user}
-          </span>
-
-          <button
-            className="dashboard-button"
-            onClick={() => navigate("/dashboard")}
-          >
-            <i className="fas fa-chart-line"></i> Dashboard
-          </button>
-
-          <button
-            className="submissions-button"
-            onClick={() => navigate("/submissions")}
-          >
-            <i className="fas fa-list-alt"></i> Submissions
-          </button>
-
-          <button onClick={handleLogout} className="logout-button">
-            <i className="fas fa-sign-out-alt"></i> Logout
-          </button>
-        </div>
-      </div>
-
-      {questions.length > 0 ? (
-        questions.map((q) => (
-          <div key={q.id} className="question-card">
-            <div>
-              <h3 className="question-title">
-                <i className="fas fa-circle-question"></i> {q.title}
-              </h3>
-              <p className={`difficulty ${q.difficulty.toLowerCase()}`}>
-                <i className="fas fa-bolt"></i> Difficulty: {q.difficulty}
-              </p>
-            </div>
-            <button
-              className="solve-button"
-              onClick={() => navigate(`/solve/${subject}/${q.id}`)}
-            >
-              <i className="fas fa-play"></i> Solve
-            </button>
-          </div>
-        ))
+      <header className="question-list-header">
+        <h1 className="project-title">Logic Lab</h1>
+        <Link to="/dashboard" className="back-to-dashboard">
+          ← Back to Dashboard
+        </Link>
+      </header>
+      
+      <h2 className="subject-title">{subjectId.charAt(0).toUpperCase() + subjectId.slice(1)} Questions</h2>
+      
+      {loading ? (
+        <p className="loading-message">Loading questions...</p>
+      ) : error ? (
+        <p className="error-message">{error}</p>
+      ) : questions.length === 0 ? (
+        <p>No questions found for this subject.</p>
       ) : (
-        <p className="no-questions">No questions available for this subject.</p>
+        <ul className="questions-ul">
+          {questions.map((q) => (
+            <li key={q.id} className="question-item">
+              <Link to={`/solve/${subjectId}/${q.id}`} className="question-link">
+                {q.title}
+                <span className={`difficulty-tag ${getDifficultyClass(q.difficulty)}`}>
+                  {q.difficulty}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
 }
+
+export default QuestionList;

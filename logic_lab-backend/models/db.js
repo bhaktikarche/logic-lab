@@ -1,19 +1,10 @@
-const mysql = require('mysql2');
-require('dotenv').config();
+import mysql from 'mysql2/promise'; 
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+const pool = await mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'bk200423',
+  database: 'logic_lab',
 });
 
-db.connect((err) => {
-  if (err) {
-    console.error('DB Connection Failed:', err);
-  } else {
-    console.log('Connected to MySQL DB');
-  }
-});
-
-module.exports = db;
+export default pool;
