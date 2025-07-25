@@ -1,97 +1,123 @@
-# 🧠 Logic Lab
+# Logic_Lab 💡
 
-A modern HackerRank-style coding platform clone built using **React + Vite**.  
-Logic Lab includes login/signup flows, dashboard, question lists, bookmarking, and code solving pages – all styled with clean, custom CSS.
+Logic_Lab is a web-based platform designed to help users practice, bookmark, and solve coding questions categorized by subject and difficulty. Built using a full-stack architecture with a React frontend and a Node.js + Express backend, it simulates a HackerRank-like experience for developers.
 
 ---
 
 ## 🚀 Features
 
-- 🔐 **Login & Signup** using React Router
-- 🧑‍💻 **Dashboard** for user stats and subjects
-- 📄 **Question List** page
-- ✏️ **Solve Page** for individual problems
-- 📌 **Bookmarks Page** to view saved questions
-- 🏆 **Leaderboard Page** (UI Ready)
-- 🌗 **Dark/Light Mode** toggle
-- 💬 Toast notifications for user feedback
-- 🎨 Fully responsive custom CSS styling
+### 👨‍💻 Frontend (React)
+- User login & registration flow
+- Dashboard with categorized coding questions
+- Modal popup to display question results
+- Question filtering by subject/difficulty
+- Bookmarking functionality
+- Clean and responsive UI (Vite + React)
+
+### 🛠 Backend (Node.js + Express)
+- RESTful APIs for:
+  - **Users**
+  - **Subjects**
+  - **Questions**
+  - **Bookmarks**
+- Authentication middleware (JWT-based)
+- Controller & route structure for modularity
 
 ---
 
-## 🗂️ Project Structure
+## 📁 Project Structure
 
 ```
 
-logic\_lab/
-├── backend/                  # Node.js + MySQL backend (auth system)
-├── src/
-│   ├── components/
-│   │   ├── Login.jsx
-│   │   ├── Signup.jsx
-│   │   ├── Dashboard.jsx
-│   │   ├── QuestionList.jsx
-│   │   ├── SolvePage.jsx
-│   │   ├── Bookmarks.jsx
-│   │   ├── Leaderboard.jsx
-│   │   ├── styles/
-│   │   │   ├── Auth.css
-│   │   │   ├── Dashboard.css
-│   │   │   ├── QuestionList.css
-│   │   │   └── SolvePage.css
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
+logic_lab/
+│
+├── logic_lab-backend/
+│   ├── controllers/
+│   │   ├── bookmarkController.js
+│   │   ├── questionController.js
+│   │   └── subjectController.js
+│   ├── middlewares/
+│   │   └── authMiddleware.js
+│   ├── routes/
+│   │   ├── bookmarkRoutes.js
+│   │   ├── questionRoutes.js
+│   │   └── subjectRoutes.js
+│   └── db.txt                        # Temporary/test database
+│
 ├── public/
-│   └── index.html
-└── README.md
-
-````
-
----
-
-## 📸 Screenshots
-
-| Landing Page | Dashboard | Question Page | Solve Page |
-|--------------|-----------|----------------|-------------|
-| ![Landing](screenshots/landing.png) | ![Dashboard](screenshots/dashboard.png) | ![Question](screenshots/question.png) | ![Solve](screenshots/solve.png) |
-
-
----
-
-## ⚙️ Tech Stack
-
-- [React](https://reactjs.org/)
-- [Vite](https://vitejs.dev/)
-- [React Router](https://reactrouter.com/)
-- [Font Awesome](https://cdnjs.com/libraries/font-awesome)
-- [Node.js](https://nodejs.org/) & [MySQL](https://www.mysql.com/) *(backend for auth)*
-- Toast Notifications via `react-hot-toast`
-- Fully responsive **plain CSS** (no Bootstrap)
+│   └── assets/
+│       └── login.mp4                # Login background video
+│
+├── src/
+│   └── components/
+│       ├── AdminDashboard.jsx       # Admin view for managing users/questions
+│       ├── Auth.jsx                 # Auth logic for login/signup & route protection
+│       ├── Bookmarks.jsx            # Displays user's bookmarked questions
+│       ├── Dashboard.jsx            # Main user dashboard with questions overview
+│       ├── LandingPage.jsx          # Public landing page
+│       ├── Login.jsx                # Login form component
+│       ├── NotFound.jsx             # 404 fallback page
+│       ├── Profile.jsx              # User profile and activity stats
+│       ├── ProtectedRoute.jsx       # Route wrapper for authenticated views
+│       ├── QuestionList.jsx         # Question browser by difficulty/subject
+│       ├── ResultModal.jsx          # Result feedback modal after solving
+│       ├── Signup.jsx               # Signup form component
+│       ├── SolvePage.jsx            # Question solving interface
+│       └── Submissions.jsx          # List of user submissions
+│
+├── package.json                     # Project metadata and dependencies
+└── vite.config.js                   # Vite configuration
 
 ---
 
-## 🔧 Setup Instructions
+## 📦 Installation
+
+### 1. Clone the repository
 
 ```bash
-# 1. Clone the repo
 git clone https://github.com/bhaktikarche/logic-lab.git
 cd logic-lab
-
-# 2. Install frontend dependencies
-npm install
-
-# 3. Start the React development server
-npm run dev
 ````
 
-> 🗒️ For backend setup, refer to `/backend/README.md` (coming soon)
+### 2. Install frontend dependencies
+
+```bash
+npm install
+npm run dev
+```
+
+### 3. Setup backend
+
+```bash
+cd logic_lab-backend
+npm install
+node server.js
+```
+
+> Make sure to configure environment variables and MongoDB/MySQL (if using real DB instead of `db.txt`)
 
 ---
 
-## 📌 License
+## 🛡 Tech Stack
 
-This project is built for learning and educational purposes.
+* **Frontend**: React, Vite
+* **Backend**: Node.js, Express.js
+* **Auth**: JWT + Middleware
+* **State Handling**: useState, useEffect
+* **Styling**: CSS
+* **Database**: Placeholder (`db.txt`), easily extendable to MongoDB/MySQL
 
 ---
 
+## 📌 TODO / Coming Soon
+
+* Leaderboard system
+* Timer for coding questions
+* Profile page & user stats
+---
+
+## 📄 License
+
+MIT License © [Bhakti Karche](https://github.com/bhaktikarche)
+
+```
