@@ -5,7 +5,6 @@ import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import QuestionList from "./components/QuestionList";
 import SolvePage from "./components/SolvePage";
-import Submissions from "./components/Submissions";
 import Profile from "./components/Profile";
 import AdminDashboard from "./components/AdminDashboard";
 import NotFound from "./components/NotFound";
@@ -13,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import LandingPage from "./components/LandingPage";
 import { Toaster } from "react-hot-toast";
 import Bookmarks from "./components/Bookmarks";
+import SubmissionsPage from "./components/SubmissionsPage.jsx";
 
 function App() {
   return (
@@ -79,7 +79,7 @@ function App() {
           path="/submissions"
           element={
             <ProtectedRoute>
-              <Submissions />
+              <SubmissionsPage />
             </ProtectedRoute>
           }
         />

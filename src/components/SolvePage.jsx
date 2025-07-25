@@ -168,6 +168,47 @@ int main() {
     }
   };
 
+  const handleSubmit = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    toast.error("Login required");
+    return navigate("/login");
+  }
+
+  if (!question) {
+    toast.error("Question not loaded");
+    return;
+  }
+
+  try {
+    const status =
+      output.trim() === question.sample_output?.trim()
+        ? "Correct"
+        : "Wrong";
+
+    await axios.post(
+      `http://localhost:5000/api/submissions/${questionId}`,
+      {
+        language,
+        code,
+        output,
+        status,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    toast.success("🎉 Submission successful!");
+  } catch (err) {
+    console.error(err);
+    toast.error("❌ Submission failed");
+  }
+};
+
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     toast.success("Logged out");
@@ -208,9 +249,12 @@ int main() {
         <button className="back-button" onClick={() => navigate(-1)}>
           <FiArrowLeft /> Back
         </button>
-        <h1 className="logo">
-          <FiCode /> Logic Lab
-        </h1>
+        <h1
+  className="logo cursor-pointer hover:text-blue-500 transition"
+  onClick={() => navigate("/dashboard")}
+>
+  <FiCode /> Logic Lab
+</h1>
 
         <div className="profile-menu-container">
           <button className="profile-button" onClick={() => setShowProfileMenu(!showProfileMenu)}>
@@ -309,6 +353,17 @@ int main() {
               >
                 <FiPlay /> {loading ? "Running..." : "Run"}
               </button>
+
+     <button
+  className="submit-button"
+  onClick={handleSubmit}
+  disabled={
+    loading || !question || output.trim() !== question.sample_output?.trim()
+  }
+>
+  ✅ Submit
+</button>
+
             </div>
           </div>
 

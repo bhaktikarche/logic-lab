@@ -7,6 +7,8 @@ import authRoutes from "./routes/authRoutes.js";
 import questionRoutes from "./routes/questionRoutes.js";
 import subjectRoutes from "./routes/subjectRoutes.js";
 import bookmarkRoutes from './routes/bookmarkRoutes.js';
+import submissionRoutes from "./routes/submissionRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -23,6 +25,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/bookmarks", bookmarkRoutes);
+app.use("/api/submissions", submissionRoutes);
+app.use("/api/users", userRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {
